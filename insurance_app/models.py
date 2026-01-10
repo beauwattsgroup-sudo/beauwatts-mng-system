@@ -29,7 +29,7 @@ class Customer(models.Model):
     installed_on = models.DateField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'Customer'
 
 
@@ -44,7 +44,7 @@ class Insurance(models.Model):
     ins_co = models.CharField(max_length=200)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'Insurance'
 
 class Warranty(models.Model):
@@ -56,7 +56,7 @@ class Warranty(models.Model):
     details = models.TextField(blank=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'Warranty'
 
 class Defect(models.Model):
@@ -75,7 +75,7 @@ class Defect(models.Model):
     status = models.CharField(max_length=50, default='Pending')
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'Defect'
 
 class CustomerFile(models.Model):
@@ -85,7 +85,7 @@ class CustomerFile(models.Model):
     id_customer = models.ForeignKey(Customer, on_delete=models.CASCADE, db_column='id_customer')
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'CustomerFile' 
         verbose_name = 'Customer File'
         verbose_name_plural = 'Customer Files'
@@ -98,7 +98,7 @@ class InsuranceRenewalNotice(models.Model):
     is_dismissed = models.BooleanField(default=False)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'InsuranceRenewalNotice'
         unique_together = ('insurance', 'renewal_year')
 
