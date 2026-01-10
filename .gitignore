@@ -1,0 +1,17 @@
+# System & App files
+*.exe
+Microsoft VS Code/
+node_modules/
+.vscode/
+.idea/
+
+# Python & Django
+__pycache__/
+*.py[cod]
+venv/
+.env
+env/
+ENV/
+db.sqlite3
+db.sqlite3-journal
+media/
