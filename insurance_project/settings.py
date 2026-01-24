@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'insurance_app',
-    'django_cleanup.apps.CleanupConfig',
 ]
 
 MIDDLEWARE = [
