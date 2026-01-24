@@ -133,6 +133,8 @@
                             <thead class="bg-gray-50"><tr>
                                 <th class="py-2 px-3 border-b text-left text-sm font-semibold text-gray-600">Status</th>
                                 <th class="py-2 px-3 border-b text-left text-sm font-semibold text-gray-600">Policy</th>
+                                <th class="py-2 px-3 border-b text-left text-sm font-semibold text-gray-600">Sum</th>
+                                <th class="py-2 px-3 border-b text-left text-sm font-semibold text-gray-600">Income Loss</th>
                                 <th class="py-2 px-3 border-b text-left text-sm font-semibold text-gray-600">Company</th>
                                 <th class="py-2 px-3 border-b text-left text-sm font-semibold text-gray-600">End Date</th>
                                 {% if perms.insurance_app.change_insurance or perms.insurance_app.delete_insurance %}
@@ -147,6 +149,8 @@
                                     {% else %} bg-green-500 {% endif %}"></span>
                                 </td>
                                 <td class="py-2 px-3 border-b">{{ ins.no_insurance }}</td>
+                                <td class="py-2 px-3 border-b">RM {{ ins.sum_amount}}</td>
+                                <td class="py-2 px-3 border-b">RM {{ ins.income_loss}}</td>
                                 <td class="py-2 px-3 border-b">{{ ins.ins_co }}</td>
                                 <td class="py-2 px-3 border-b">{{ ins.end_period|date:"F d, Y" }}</td>
                                 {% if perms.insurance_app.change_insurance or perms.insurance_app.delete_insurance %}
@@ -181,6 +185,7 @@
                         <thead class="bg-gray-50"><tr>
                             <th class="py-2 px-3 border-b text-left text-sm font-semibold text-gray-600">Status</th>
                             <th class="py-2 px-3 border-b text-left text-sm font-semibold text-gray-600">Product</th>
+                            <th class="py-2 px-3 border-b text-left text-sm font-semibold text-gray-600">Details</th>
                             <th class="py-2 px-3 border-b text-left text-sm font-semibold text-gray-600">End Date</th>
                             {% if perms.insurance_app.change_warranty or perms.insurance_app.delete_warranty %}
                                 <th class="py-2 px-3 border-b text-left text-sm font-semibold text-gray-600">Actions</th>
@@ -194,6 +199,7 @@
                                 {% else %} bg-green-500 {% endif %}"></span>
                             </td>
                             <td class="py-2 px-3 border-b">{{ item.product_name }}</td>
+                            <td class="py-2 px-3 border-b">{{ item.details|default:"N/A" }}</td>
                             <td class="py-2 px-3 border-b">{{ item.end_date|date:"F d, Y" }}</td>
                             {% if perms.insurance_app.change_warranty or perms.insurance_app.delete_warranty %}
                                 <td class="py-2 px-3 border-b space-x-3">

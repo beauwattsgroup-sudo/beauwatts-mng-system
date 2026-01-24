@@ -396,6 +396,7 @@ def add_insurance(request):
             Insurance.objects.create(
                 no_insurance=request.POST.get('no_insurance'),
                 sum_amount=request.POST.get('sum_amount'),
+                income_loss=request.POST.get('income_loss') or 0.00,
                 starting_period=request.POST.get('starting_period'),
                 end_period=request.POST.get('end_period'),
                 id_customer=customer,
@@ -418,6 +419,7 @@ def edit_insurance(request, pk):
     insurance = get_object_or_404(Insurance, pk=pk)
     if request.method == 'POST':
         insurance.sum_amount = request.POST.get('sum_amount')
+        insurance.income_loss = request.POST.get('income_loss') or 0.00,
         insurance.starting_period = request.POST.get('starting_period')
         insurance.end_period = request.POST.get('end_period')
         insurance.total_payable = request.POST.get('total_payable')
@@ -474,8 +476,7 @@ def add_warranty(request, customer_pk):
         return redirect('customer_detail', pk=customer.id_customer)
     
     predefined_items = [
-        "Inverter", "String Inverter", "Hybrid Inverter", 
-        "Battery-based Inverter", "Micro Inverter", "Central Optimiser", "Central Inverter"
+        "Inverter", "String Inverter", "Hybrid Inverter", "Micro Inverter"
     ]
     context = {
         'customer': customer,
@@ -490,42 +491,45 @@ def edit_warranty(request, pk):
     warranty = get_object_or_404(Warranty, pk=pk)
     
     predefined_items = [
-        "Inverter", "String Inverter", "Hybrid Inverter", 
-        "Battery-based Inverter", "Micro Inverter", "Central Optimiser", "Central Inverter"
+        "Inverter", "String Inverter", "Hybrid Inverter", "Micro Inverter"
     ]
     
-    if request.method == 'POST':
-        product_choice = request.POST.get('product_select')
-        other_product = request.POST.get('product_other', '').strip()
-        final_product_name = ""
+    is_other_product = warranty.product_name not in predefined_items
 
-        if product_choice == 'other':
-            if other_product:
-                final_product_name = other_product
-            else:
-                messages.error(request, "You selected 'Other' but did not specify a product name.")
-                context = {'warranty': warranty, 'predefined_items': predefined_items, 'is_other': True}
-                return render(request, 'insurance_app/edit_warranty.html', context)
-        elif product_choice:
-            final_product_name = product_choice
-        else:
-            messages.error(request, "You must select a product name.")
-            context = {'warranty': warranty, 'predefined_items': predefined_items, 'is_other': False}
-            return render(request, 'insurance_app/edit_warranty.html', context)
+    current_duration = 5 
+    if warranty.start_date and warranty.end_date:
+        days_diff = (warranty.end_date - warranty.start_date).days + 1
+        current_duration = int(round(days_diff / 365.25))
+ 
+    standard_durations = [5, 10, 12, 25]
+    is_other_duration = current_duration not in standard_durations
+
+    if request.method == 'POST':
+        product_select = request.POST.get('product_select')
         
+        if product_select == 'other':
+            final_product_name = request.POST.get('product_other')
+        else:
+            final_product_name = product_select
+
         warranty.product_name = final_product_name
         warranty.start_date = request.POST.get('start_date')
         warranty.end_date = request.POST.get('end_date')
         warranty.details = request.POST.get('details')
-        warranty.save()
-        messages.success(request, "Warranty details updated successfully.")
-        return redirect('customer_detail', pk=warranty.id_customer.id_customer)
-    
-    is_other = warranty.product_name not in predefined_items
+        
+        try:
+            warranty.save()
+            messages.success(request, "Warranty details updated successfully.")
+            return redirect('customer_detail', pk=warranty.id_customer.id_customer)
+        except Exception as e:
+            messages.error(request, f"Error updating warranty: {e}")
+
     context = {
         'warranty': warranty,
         'predefined_items': predefined_items,
-        'is_other': is_other
+        'is_other_product': is_other_product,
+        'current_duration': current_duration,
+        'is_other_duration': is_other_duration,
     }
     return render(request, 'insurance_app/edit_warranty.html', context)
 
