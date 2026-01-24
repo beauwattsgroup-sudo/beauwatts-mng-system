@@ -91,6 +91,12 @@ class CustomerFile(models.Model):
         verbose_name = 'Customer File'
         verbose_name_plural = 'Customer Files'
 
+    def delete(self, *args, **kwargs):
+        # This physically deletes the file from Cloudinary
+        self.file.delete(save=False)
+        # This deletes the record from the database
+        super().delete(*args, **kwargs)
+
 class InsuranceRenewalNotice(models.Model):
     id = models.AutoField(primary_key=True)
     insurance = models.ForeignKey(Insurance, on_delete=models.CASCADE, db_column='insurance_id')
