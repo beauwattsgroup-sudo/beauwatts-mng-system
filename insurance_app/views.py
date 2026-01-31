@@ -420,6 +420,7 @@ def add_insurance(request):
 def edit_insurance(request, pk):
     insurance = get_object_or_404(Insurance, pk=pk)
     if request.method == 'POST':
+        print("POST DATA:", request.POST)
         insurance.sum_amount = request.POST.get('sum_amount')
         insurance.income_loss = request.POST.get('income_loss') or 0.00,
         insurance.starting_period = request.POST.get('starting_period')
