@@ -425,10 +425,15 @@ def edit_insurance(request, pk):
         insurance.total_payable = request.POST.get('total_payable')
         insurance.status = request.POST.get('status')
         insurance.ins_co = request.POST.get('ins_co')
-        insurance.save()
-        messages.success(request, f"Insurance policy '{insurance.no_insurance}' updated successfully.")
-        return redirect('customer_detail', pk=insurance.id_customer.id_customer)
-    return render(request, 'insurance_app/edit_insurance.html', {'insurance': insurance})
+
+        try:
+            insurance.save()
+            messages.success(request, "Insurance policy updated successfully.")
+            return redirect('customer_detail', pk=insurance.id_customer.id_customer)
+        except Exception as e:
+            messages.error(request, f"Error updating insurance: {e}")
+
+    return render(request, 'insurance_app/edit_insurance.html', {'insurance': insurance,})
 
 @login_required
 @permission_required('insurance_app.delete_insurance', raise_exception=True)

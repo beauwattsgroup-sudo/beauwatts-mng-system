@@ -93,6 +93,16 @@
                     <input type="text" id="address" name="address" value="{{ customer.address|default:'' }}"
                            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
+
+                <div>
+                    <label for="customer_type" class="block text-gray-700 font-semibold mb-2">Customer Type (Optional)</label>
+                    <select name="customer_type" id="customer_type" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="" {% if not customer.customer_type %}selected{% endif %}>-- Select Type --</option>
+                    
+                        <option value="Residential" {% if customer.customer_type == 'Residential' %}selected{% endif %}>Residential</option>
+                        <option value="C&I" {% if customer.customer_type == 'C&I' %}selected{% endif %}>C&I</option>
+                    </select>
+                </div>
                 
                 <div>
                     <label for="email" class="block text-gray-700 font-semibold mb-2">Email(Optional)</label>

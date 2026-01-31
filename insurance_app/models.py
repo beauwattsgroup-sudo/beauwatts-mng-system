@@ -3,6 +3,12 @@ from django.db import models
 class Customer(models.Model):
     id_customer = models.CharField(max_length=50, primary_key=True)
     customer_name = models.CharField(max_length=200)
+    CUSTOMER_TYPE_CHOICES = [
+        ('Residential', 'Residential'),
+        ('C&I', 'C&I'),
+    ]
+    
+    customer_type = models.CharField(max_length=20, choices=CUSTOMER_TYPE_CHOICES, blank=True, null=True)
     address = models.CharField(max_length=200, blank=True, default='')
     email = models.CharField(max_length=200, blank=True, default='')
     phone_num = models.CharField(max_length=50, blank=True, default='')
@@ -92,9 +98,7 @@ class CustomerFile(models.Model):
         verbose_name_plural = 'Customer Files'
 
     def delete(self, *args, **kwargs):
-        # This physically deletes the file from Cloudinary
         self.file.delete(save=False)
-        # This deletes the record from the database
         super().delete(*args, **kwargs)
 
 class InsuranceRenewalNotice(models.Model):
