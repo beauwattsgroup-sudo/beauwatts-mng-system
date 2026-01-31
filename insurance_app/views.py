@@ -414,7 +414,6 @@ def add_insurance(request):
         
     return render(request, 'insurance_app/add_insurance.html', {'customers': customers})
 
-
 @login_required
 @permission_required('insurance_app.change_insurance', raise_exception=True)
 def edit_insurance(request, pk):
@@ -422,7 +421,7 @@ def edit_insurance(request, pk):
     if request.method == 'POST':
         print("POST DATA:", request.POST)
         insurance.sum_amount = request.POST.get('sum_amount')
-        insurance.income_loss = request.POST.get('income_loss') or 0.00,
+        insurance.income_loss = request.POST.get('income_loss') or 0.00
         if hasattr(insurance, 'start_date'):
             insurance.start_date = request.POST.get('starting_period')
             insurance.end_date = request.POST.get('end_period')
