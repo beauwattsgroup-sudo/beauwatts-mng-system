@@ -278,7 +278,8 @@ def add_customer(request):
                 Customer.objects.create(
                     id_customer=request.POST.get('id_customer'),
                     customer_name=request.POST.get('customer_name'),
-                    address=request.POST.get('address', ''), 
+                    address=request.POST.get('address', ''),
+                    customer_type = request.POST.get('customer_type') 
                     email=request.POST.get('email', ''), 
                     phone_num=request.POST.get('phone_num', ''), 
                     in_charge_person=in_charge,
@@ -329,7 +330,8 @@ def edit_customer(request, pk):
         engineers_str = ",".join(engineer_list)
 
         customer.customer_name = request.POST.get('customer_name')
-        customer.address = request.POST.get('address', '') 
+        customer.address = request.POST.get('address', '')
+        customer.customer_type = request.POST.get('customer_type') 
         customer.email = request.POST.get('email', '') 
         customer.phone_num = request.POST.get('phone_num', '') 
         
