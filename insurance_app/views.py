@@ -279,7 +279,7 @@ def add_customer(request):
                     id_customer=request.POST.get('id_customer'),
                     customer_name=request.POST.get('customer_name'),
                     address=request.POST.get('address', ''),
-                    customer_type = request.POST.get('customer_type') 
+                    customer_type = request.POST.get('customer_type'),
                     email=request.POST.get('email', ''), 
                     phone_num=request.POST.get('phone_num', ''), 
                     in_charge_person=in_charge,
