@@ -422,12 +422,8 @@ def edit_insurance(request, pk):
         print("POST DATA:", request.POST)
         insurance.sum_amount = request.POST.get('sum_amount')
         insurance.income_loss = request.POST.get('income_loss') or 0.00
-        if hasattr(insurance, 'start_date'):
-            insurance.start_date = request.POST.get('starting_period')
-            insurance.end_date = request.POST.get('end_period')
-        else:
-            insurance.starting_period = request.POST.get('starting_period')
-            insurance.end_period = request.POST.get('end_period')
+        insurance.starting_period = request.POST.get('starting_period')
+        insurance.end_period = request.POST.get('end_period')
         insurance.total_payable = request.POST.get('total_payable')
         insurance.status = request.POST.get('status')
         insurance.ins_co = request.POST.get('ins_co')
