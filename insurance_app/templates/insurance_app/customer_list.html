@@ -31,21 +31,31 @@
                             Customer ID {% if 'id_customer' in current_sort %}{% if current_sort|first == '-' %}&darr;{% else %}&uarr;{% endif %}{% endif %}
                         </a>
                     </th>
+
                     <th class="py-3 px-4 border-b text-left text-sm font-semibold text-gray-600">
                         <a href="?sort_by={% if current_sort == 'customer_name' %}-customer_name{% else %}customer_name{% endif %}&query={{ query|urlencode }}&search_field={{ search_field }}" class="hover:text-blue-600">
                             Name {% if 'customer_name' in current_sort %}{% if current_sort|first == '-' %}&darr;{% else %}&uarr;{% endif %}{% endif %}
                         </a>
                     </th>
+
+                    <th class="py-3 px-4 border-b text-left text-sm font-semibold text-gray-600">
+                        <a href="?sort_by={% if current_sort == 'customer_type' %}-customer_type{% else %}customer_type{% endif %}&query={{ query|urlencode }}&search_field={{ search_field }}" class="hover:text-blue-600"></a>
+                            Type {% if 'customer_type' in current_sort %}{% if current_sort|first == '-' %}&darr;{% else %}&uarr;{% endif %}{% endif %}
+                        </a>
+                    </th>
+                
                     <th class="py-3 px-4 border-b text-left text-sm font-semibold text-gray-600">
                          <a href="?sort_by={% if current_sort == 'email' %}-email{% else %}email{% endif %}&query={{ query|urlencode }}&search_field={{ search_field }}" class="hover:text-blue-600">
                             Email {% if 'email' in current_sort %}{% if current_sort|first == '-' %}&darr;{% else %}&uarr;{% endif %}{% endif %}
                         </a>
                     </th>
+
                     <th class="py-3 px-4 border-b text-left text-sm font-semibold text-gray-600">
                          <a href="?sort_by={% if current_sort == 'phone_num' %}-phone_num{% else %}phone_num{% endif %}&query={{ query|urlencode }}&search_field={{ search_field }}" class="hover:text-blue-600">
                             Phone {% if 'phone_num' in current_sort %}{% if current_sort|first == '-' %}&darr;{% else %}&uarr;{% endif %}{% endif %}
                         </a>
                     </th>
+
                     <th class="py-3 px-4 border-b text-left text-sm font-semibold text-gray-600">Actions</th>
                 </tr>
             </thead>
@@ -81,6 +91,8 @@
                     <td class="py-3 px-4 border-b font-mono">{{ customer.id_customer }}</td>
         
                     <td class="py-3 px-4 border-b font-medium text-gray-900">{{ customer.customer_name }}</td>
+
+                    <td class="py-3 px-4 border-b">{{ customer.customer_type|default:" " }}</td>
         
                     <td class="py-3 px-4 border-b">{{ customer.email|default:"N/A" }}</td>
         
